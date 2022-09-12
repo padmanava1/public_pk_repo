@@ -1,8 +1,10 @@
+import 'package:dartz/dartz.dart';
+import '../../../core/failures/failures.dart';
+import '../../data/models/signup_model.dart';
 
-abstract class SignupRepository {
+abstract class SignUpRepository {
 
   //sign_up repository methods
-  Future<Either<Failures, bool>> signUp(
-      String firstName, firstName, String email, String password);
+  Future<Either<Failures, void>> signUpData(SignUpModel signUpModel);
 
 }

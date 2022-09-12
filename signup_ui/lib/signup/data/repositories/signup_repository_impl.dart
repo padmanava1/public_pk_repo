@@ -1,22 +1,24 @@
+import 'package:dartz/dartz.dart';
+import '../../../core/failures/failures.dart';
+import '../../domain/repositories/signup_repository.dart';
+import '../data_sources/signup_data_source.dart';
+import '../models/signup_model.dart';
 
-
-class SignupRepositoryImpl implements SignupRepository {
+class SignUpRepositoryImpl implements SignUpRepository {
   final SignUpDataSource signUpDataSource;
 
-  SignupRepositoryImpl({required this.signupDataSource});
-
-  //Signup anonymous repository methods impl
-
+  SignUpRepositoryImpl({
+    required this.signUpDataSource,
+  });
 
   @override
-  Future<Either<Failures, bool>> signUp(
-      String fullName, String email, String password) async {
-    return await signupDataSource.signUp(
-        fullName: firstName,
-        lastName: lastname,
-        email: email.toString(),
-        password: password.toString());
+  Future<Either<Failures, void>> signUpData(SignUpModel signUpModel) {
+    return signUpDataSource.signUp(signUpModel);
   }
+
+
+
+
 
 
 }

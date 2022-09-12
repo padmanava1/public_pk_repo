@@ -1,25 +1,50 @@
-import 'package:equatable/equatable.dart';
 
-class SignupModel extends Equatable {
-  final String? firstName, lastName, email, phoneNumber, password, gender;
 
-  const SignupModel(
+
+class SignUpModel
+
+{
+  final String?
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      password,
+  
+      gender,
+  
+  
+      countryCode
+  
+  ;
+
+  const SignUpModel(
       {required this.firstName,
       required this.lastName,
       required this.email,
       required this.phoneNumber,
       required this.password,
-      required this.gender});
+  
+      required this.gender,
+  
+  
+      required this.countryCode
+  
+      });
 
-  factory SignupModel.fromJson(Map<String, dynamic> json) {
-    return SignupModel(
+  factory SignUpModel.fromJson(Map<String, dynamic> json) {
+    return SignUpModel(
 
         firstName: json['firstName'],
         lastName: json['lastName'],
         email: json['email'],
         phoneNumber: json['phoneNumber'],
         password: json['password'],
+
         gender: json['gender'],
+
+
+        countryCode: json['countryCode'],
 
 
     );
@@ -32,11 +57,14 @@ class SignupModel extends Equatable {
       "email": email,
       "phoneNumber": phoneNumber,
       "password": password,
+      
       "gender": gender,
-
+      
+    
+      "countryCode": countryCode,
+    
     };
   }
 
-  @override
-  List<Object?> get props => [firstName, lastName, email, phoneNumber, password, gender];
+
 }

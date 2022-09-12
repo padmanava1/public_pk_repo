@@ -1,18 +1,22 @@
-import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:signup_ui/core/base/base_state.dart';
-import 'package:signup_ui/signup/presentation/cubit/signup_cubit.dart';
-import 'package:signup_ui/widgets/custom_textField_widget.dart';
+import '../../../core/base/base_state.dart';
 
-class SignupPage extends StatefulWidget {
-  SignupPage({Key? key}) : super(key: key);
+import '../bloc/sign_up_bloc.dart';
+
+
+
+import 'package:country_picker/country_picker.dart';
+
+
+class SignUpPage extends StatefulWidget {
+  SignUpPage({Key? key}) : super(key: key);
 
   @override
-  State<SignupPage> createState() => _SignupPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignupPageState extends State<SignupPage> {
+class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController firstName = TextEditingController();
 
   final TextEditingController lastName = TextEditingController();
@@ -24,29 +28,34 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController password = TextEditingController();
 
   final TextEditingController confirmPassword = TextEditingController();
-
+  
   String? gender = "Male";
+  
 
   final _formKey = GlobalKey<FormState>();
   bool hide = true;
   bool confirmPasswordHide = true;
-  bool isCountrySelected = false;
-  var countryCode = '';
 
+  
+  bool isCountrySelected = false;
+  var countryCode = '91';
+  
+  var regexEmail = RegExp(r'\S+@\S+\.\S+');
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Sign Up'),
+      ),
+        body: SingleChildScrollView(
+      child: Form(
+        key: _formKey,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 40,
-              ),
               Center(
                   child: Text(
                 'Create Your New Account',
@@ -57,9 +66,9 @@ class _SignupPageState extends State<SignupPage> {
               )),
               Center(
                 child: FractionallySizedBox(
-                  widthFactor: .6,
+                  widthFactor: .9,
                   child: Image.network(
-                    "https://img.freepik.com/free-vector/sign-up-concept-illustration_114360-7885.jpg?w=2000",
+                    "https://cdni.iconscout.com/illustration/premium/thumb/user-account-sign-up-4489360-3723267.png",
                   ),
                 ),
               ),
@@ -101,7 +110,10 @@ class _SignupPageState extends State<SignupPage> {
                   //controller: fullName,
                 ),
               ),
-              BlocBuilder<SignupCubit, BaseState>(
+              
+          
+          BlocBuilder<SignUpBloc, BaseState>(
+          
                 builder: (context, state) {
                   return Padding(
                     padding: const EdgeInsets.all(12.0),
@@ -109,45 +121,85 @@ class _SignupPageState extends State<SignupPage> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       keyboardType: TextInputType.number,
                       validator: (value) {
-                        if (value.toString().isEmpty ) {
+                        if (value.toString().isEmpty) {
                           return 'Mobile number is empty';
                         }
                       },
                       decoration: InputDecoration(
-                          prefixIcon: GestureDetector(
+                        
+                          prefixIcon:
+                          GestureDetector(
                               onTap: () {
                                 showCountryPicker(
                                   context: context,
                                   showPhoneCode: true,
                                   favorite: ['in'],
-                                  exclude: <String>[
-                                    'KN',
-                                    'MF'
-                                  ], //It takes a list of country code(iso2).
                                   onSelect: (Country country) {
-                                    BlocProvider.of<SignupCubit>(context)
-                                        .selectCountry(isCountrySelected,country.phoneCode);
+                                    
+
+                                    
+                                      BlocProvider.of<SignUpBloc>(context)
+                                      .add(OnSelectCountryEvent(
+                                      isCountrySelected,country.phoneCode.toString()));
+                                      countryCode = country.phoneCode.toString();
+                                    
                                   },
-                                    //phoneNumber.text = country.phoneCode
                                 );
                               },
-                              child:
-                              (state is StateSearchResult) ? Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Text("+"+state.response.toString(),style: TextStyle(fontSize: 16),),
-                              ) :
-                              Icon(Icons.arrow_drop_down)),
+                              child: (state is StateSearchResult)
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 8.0,
+                                          top: 14.0,
+                                          bottom: 16.0,
+                                          right: 6.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Flexible(
+                                              child:
+                                                  Icon(Icons.arrow_drop_down)),
+                                          Flexible(
+                                            child: Text(
+                                              "+" + state.response.toString(),
+                                              style: TextStyle(fontSize: 16),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 8.0,
+                                    top: 14.0,
+                                    bottom: 16.0,
+                                    right: 6.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Flexible(
+                                        child:
+                                        Icon(Icons.arrow_drop_down)),
+                                    Flexible(
+                                      child: Text(
+                                        "+" + countryCode,
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )),
+                          
+
                           hintText: "Enter your phone number",
-                          labelText: "Phone number",
+
+                          labelText: "Phone Number",
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
                           )),
                       controller: phoneNumber,
-                      onChanged: (value){
-                        //phoneNumber.text= (state is CountrySelected ? state.val.toString() : '' ) ;
-
+                      onChanged: (value) {
                       },
-
                     ),
                   );
                 },
@@ -160,6 +212,9 @@ class _SignupPageState extends State<SignupPage> {
                     if (value.toString().isEmpty) {
                       return 'Email is empty';
                     }
+                    else if(regexEmail.hasMatch(value.toString()) == false){
+                      return "Enter valid email";
+                    }
                   },
                   decoration: InputDecoration(
                       hintText: "Enter your email",
@@ -170,116 +225,132 @@ class _SignupPageState extends State<SignupPage> {
                   controller: email,
                 ),
               ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: TextFormField(
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: (value) {
-                if (value.toString().isEmpty) {
-                  return 'Password is empty';
-                }
-              },
-              decoration: InputDecoration(
-                hintText: "Enter your password",
-                labelText: "password",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) {
+                    if (value.toString().isEmpty) {
+                      return 'Password is empty';
+                    }
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Enter your password",
+                    labelText: "Password",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    suffixIcon: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            hide = !hide;
+                          });
+                        },
+                        child: Icon(
+                            (hide) ? Icons.visibility_off : Icons.visibility)),
+                  ),
+                  obscureText: hide,
+                  controller: password,
                 ),
-                suffixIcon: GestureDetector(
-                    onTap: () {
-                      setState((){
-                        hide = !hide;
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value.toString().isEmpty) {
+                          return 'Confirm password is empty!';
+                        } else if (confirmPassword.text != password.text) {
+                          return "Passwords do not match!";
+                        }
+                      },
+                      decoration: InputDecoration(
+                        hintText: "Confirm your password",
+                        labelText: "Confirm Password",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                confirmPasswordHide = !confirmPasswordHide;
+                              });
+                            },
+                            child: Icon((confirmPasswordHide)
+                                ? Icons.visibility_off
+                                : Icons.visibility)),
+                      ),
+                      obscureText: confirmPasswordHide,
+                      controller: confirmPassword,
+                    ),
+                  ),
+                  
+
+                  
+                    BlocBuilder<SignUpBloc, BaseState>(
+                  
+                      builder: (context, state) {
+                    return Text(
+                      (state is ValidationError
+                          ? "Passwords don't match!"
+                          : ""),
+                      style: TextStyle(color: Colors.red),
+                      textAlign: TextAlign.end,
+                    );
+                  })
+                ],
+              ),
+
+
+              
+             //Gender portion
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                    child: Text(
+                      'Select your Gender',
+                      style: TextStyle(fontSize: 20),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  RadioListTile(
+                    title: Text("Male"),
+                    value: "Male",
+                    groupValue: gender,
+                    onChanged: (value) {
+                      setState(() {
+                        gender = value.toString();
                       });
                     },
-                    child: Icon((hide)
-                        ? Icons.visibility_off
-                        : Icons.visibility)),
-              ),
-              obscureText: hide,
-              controller: password,
-            ),
-          ),
-               Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) {
-                            if (value.toString().isEmpty) {
-                              return 'Confirm password is empty!';
-                            } else if (confirmPassword.text != password.text) {
-                              return "Passwords do not match!";
-                            }
-                          },
-                          decoration: InputDecoration(
-                            hintText: "Confirm your password",
-                            labelText: "Confirm password",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                            suffixIcon: GestureDetector(
-                                onTap: () {
-                                 setState((){
-                                   confirmPasswordHide = !confirmPasswordHide;
-                                 });
-                                },
-                                child: Icon((confirmPasswordHide)
-                                    ? Icons.visibility_off
-                                    : Icons.visibility)),
-                          ),
-                          obscureText: confirmPasswordHide,
-                          controller: confirmPassword,
-                        ),
-                      ),
-                      BlocBuilder<SignupCubit, BaseState>(
-                          builder: (context, state) {
-                        return Text(
-                          (state is ValidationError ? "Passwords don't match!" : ""),
-                          style: TextStyle(color: Colors.red),
-                          textAlign: TextAlign.end,
-                        );
-                      })
-                    ],
                   ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-                child: Text(
-                  'Select your Gender',
-                  style: TextStyle(fontSize: 20),
-                  textAlign: TextAlign.left,
-                ),
+                  RadioListTile(
+                    title: Text("Female"),
+                    value: "Female",
+                    groupValue: gender,
+                    onChanged: (value) {
+                      setState(() {
+                        gender = value.toString();
+                      });
+                    },
+                  ),
+                  RadioListTile(
+                    title: Text("Other"),
+                    value: "Other",
+                    groupValue: gender,
+                    onChanged: (value) {
+                      setState(() {
+                        gender = value.toString();
+                      });
+                    },
+                  ),
+                ],
               ),
-              RadioListTile(
-                title: Text("Male"),
-                value: "Male",
-                groupValue: gender,
-                onChanged: (value) {
-                  setState(() {
-                    gender = value.toString();
-                  });
-                },
-              ),
-              RadioListTile(
-                title: Text("Female"),
-                value: "Female",
-                groupValue: gender,
-                onChanged: (value) {
-                  setState(() {
-                    gender = value.toString();
-                  });
-                },
-              ),
-              RadioListTile(
-                title: Text("Other"),
-                value: "Other",
-                groupValue: gender,
-                onChanged: (value) {
-                  setState(() {
-                    gender = value.toString();
-                  });
-                },
-              ),
+              
+
               Center(
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
@@ -289,7 +360,22 @@ class _SignupPageState extends State<SignupPage> {
                       onPressed: () {
                         FocusManager.instance.primaryFocus?.unfocus();
                         if (_formKey.currentState!.validate()) {
-
+                          
+                          
+                                  context.read<SignUpBloc>().add(SignUpDataEvent(
+                                    firstName.text,
+                                    lastName.text,
+                                    email.text,
+                                    phoneNumber.text,
+                                    password.text,
+                                
+                                    gender!,
+                                
+                               
+                                    countryCode
+                                
+                                            ));
+                          
                         }
                       },
                       child: Text(
@@ -319,11 +405,10 @@ class _SignupPageState extends State<SignupPage> {
               SizedBox(
                 height: 25,
               ),
-
             ],
           ),
         ),
-      )),
-    );
+      ),
+    ));
   }
 }
