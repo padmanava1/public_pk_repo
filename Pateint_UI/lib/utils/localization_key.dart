@@ -1,0 +1,33 @@
+class LocalizationKey{
+  static const verificationCodeSent = "verificationCodeSent";
+  static const enterEmailAddress = "enterEmailAddress";
+  static const enterPhoneNumber = "enterPhoneNumber";
+  static const loading = "loading";
+  static const letsGetStarted = "letsGetStarted";
+  static const next = "next";
+  static const weSentYouACode = "weSentYouACode";
+  static const enterVerificationCode = "enterVerificationCode";
+  static const resendVerificationCode = "resendVerificationCode";
+  static const back = "back";
+  static const verify = "verify";
+  static const unsupportedAuthenticationType = "unsupportedAuthenticationType";
+  static const useEmailInstead = "useEmailInstead";
+  static const usePhoneInstead = "usePhoneInstead";
+  static const unableToRequestVerificationCode = "unableToRequestVerificationCode";
+  static const loginFormUsernamePhoneTextfield = "loginFormUsernamePhoneTextfield";
+  static const phoneNumber = "phoneNumber";
+  static const enterValidPhoneNumber = "enterValidPhoneNumber";
+  static const emailAddress = "emailAddress";
+  static const enterValidEmailAddress = "enterValidEmailAddress";
+  static const verificationCode = "verificationCode";
+  static const unableToVerifyCode = "unableToVerifyCode";
+  static const pleaseEnterTheVerificationCode = "pleaseEnterTheVerificationCode";
+  static const logOut = "logOut";
+  static const hi = "hi";
+  static const asthmaCheck = "asthmaCheck";
+  static const question1 = "question1";
+  static const question2 = "question2";
+  static const question3 = "question3";
+  static const question4 = "question4";
+  static const question5 = "question5";
+}

@@ -1,5 +1,4 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class LocalNotificationService{
@@ -11,7 +10,14 @@ class LocalNotificationService{
     const InitializationSettings initializationSettings =
     InitializationSettings(
       android: AndroidInitializationSettings("@mipmap/ic_launcher"),
+      iOS: IOSInitializationSettings(
+        requestSoundPermission: false,
+        requestBadgePermission: false,
+        requestAlertPermission: false,
+        onDidReceiveLocalNotification: onDidReceiveLocalNotification,
+      ),
     );
+
 
     _notificationsPlugin.initialize(
       initializationSettings,
@@ -39,8 +45,8 @@ class LocalNotificationService{
       final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
       const NotificationDetails notificationDetails = NotificationDetails(
         android: AndroidNotificationDetails(
-          "push_notifications_demo3",
-          "push_notifications_demo3channel",
+          "push_notifications_demo3",               //channel_id from Android Manifest File
+          "push_notifications_demo3channel",        //channel_idchannel
           importance: Importance.max,
           priority: Priority.high,
         ),

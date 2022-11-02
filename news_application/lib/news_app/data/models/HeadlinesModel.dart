@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 HeadlinesModel headlinesModelFromJson(String str) => HeadlinesModel.fromJson(json.decode(str));
 String headlinesModelToJson(HeadlinesModel data) => json.encode(data.toJson());
 class HeadlinesModel {

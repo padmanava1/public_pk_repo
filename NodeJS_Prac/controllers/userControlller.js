@@ -25,7 +25,9 @@ class UserController{
         console.log(JSON.stringify(user))
         res.end();
     }
+
 }
 
 
 module.exports = UserController;
+

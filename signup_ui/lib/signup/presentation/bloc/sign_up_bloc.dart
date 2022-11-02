@@ -42,7 +42,7 @@ class SignUpBloc extends Bloc<SignUpEvent, BaseState> {
 
       res.fold((l) {
         emit(StateErrorGeneral("Sign up is not possible"));
-      }, (r) {
+      }, (r) {print(res);
         emit(StateOnSuccess(res));
       });
 

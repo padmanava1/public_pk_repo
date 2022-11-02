@@ -13,7 +13,8 @@ var sl = GetIt.instance;
 Future<void> init() async {
   // Bloc
 
-  sl.registerFactory(() => BreakingBadCubit(getAllCharacterUsecase: sl(),addStudent: sl(), getallstudents: sl()));
+  sl.registerFactory(() => BreakingBadCubit(getAllCharacterUsecase: sl(),
+      addStudent: sl(), getallstudents: sl()));
 
   sl.registerLazySingleton<BreakingBadRepository>(
       () => BreakingBadRepositoryImpl(breakingBadRemoteDatabase: sl()));

@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
 import '../../../core/failures/failures.dart';
 import '../../domain/repositories/signup_repository.dart';
-import '../data_sources/signup_data_source.dart';
-import '../models/signup_model.dart';
+import '../datasources/signup_data_source.dart';
+import '../model/signup_model.dart';
+
 
 class SignUpRepositoryImpl implements SignUpRepository {
   final SignUpDataSource signUpDataSource;

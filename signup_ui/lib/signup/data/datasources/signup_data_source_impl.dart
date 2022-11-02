@@ -14,9 +14,8 @@ class SignUpDataSourceImpl implements SignUpDataSource {
     // TODO: implement signUp
     try{
 
-      // final List<SignupModel> resList = [];
-      //
-      print(signUpModel);
+
+      print("${signUpModel.countryCode}+${signUpModel.firstName}+ ${signUpModel.gender}");
       return Right(null);
     }
     catch(e){

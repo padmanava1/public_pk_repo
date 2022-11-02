@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import '../../../core/failures/failures.dart';
-import '../models/signup_model.dart';
+import '../model/signup_model.dart';
+
 
 abstract class SignUpDataSource {
 
