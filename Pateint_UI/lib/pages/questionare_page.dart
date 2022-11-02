@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pateint_ui/pages/upcoming_visit_page.dart';
+import 'package:pateint_ui/visiting/presentation/pages/upcoming_visit_page.dart';
 import '../cubit/questionare_cubit.dart';
 import '../utils/app_localizations.dart';
 import '../utils/default_theme.dart';
@@ -212,7 +212,7 @@ class QuestionarePage extends StatelessWidget {
                         print(cubit.dropdownvalue2);
                         print(cubit.dropdownvalue3);
                         print(cubit.groupValue2);
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const UpcomingVisitPage()));
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => UpcomingVisitPage()));
                       },
                       height: 55.0,
                       width: double.infinity)

@@ -4,8 +4,6 @@ import '../../../core/base/base_state.dart';
 
 import '../bloc/sign_up_bloc.dart';
 
-
-
 import 'package:country_picker/country_picker.dart';
 
 

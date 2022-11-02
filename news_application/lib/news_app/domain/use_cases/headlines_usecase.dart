@@ -16,9 +16,4 @@ class NewsUsecase implements Usecase<List<HeadlinesModel>, NoParams> {
    return await newsRepository.getHeadlines();
   }
 
-
-
-
-
-
 }

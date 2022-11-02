@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../cubit/upcoming_visit_page_cubit.dart';
-import '../cubit/visits_cubit.dart';
+import '../visiting/presentation/cubit/upcoming_visit_page_cubit.dart';
+import '../visiting/presentation/cubit/visits_cubit.dart';
 import '../utils/default_theme.dart';
+import '../visiting/presentation/cubit/visits_state.dart';
 import 'custom_button.dart';
 
 class VisitsListTile extends StatelessWidget {
-  VisitsListTile({Key? key, required this.index, }) : super(key: key);
+  VisitsListTile(
+      {Key? key,
+      required this.index,
+      required this.callBack,
+      required this.docAddress,
+      required this.docName,
+      required this.visitingDate,required this.id})
+      : super(key: key);
   int index;
+  VoidCallback callBack;
+  String visitingDate;
+  String docName;
+  String docAddress;
+  String id;
   //bool isTileExpanded;
 
   @override
@@ -34,48 +47,46 @@ class VisitsListTile extends StatelessWidget {
               height: 10,
             ),
             Theme(
-              data: ThemeData(dividerColor: Colors.transparent).copyWith(primaryColor: DefaultTheme.primaryColor),
+              data: ThemeData(dividerColor: Colors.transparent)
+                  .copyWith(primaryColor: DefaultTheme.primaryColor),
               child: ExpansionTile(
                 onExpansionChanged: (value) {
                   //isTileExpanded = !isTileExpanded;
-                  cubit.isListTileExpanded = !cubit.isListTileExpanded;
+                  cubit.isListTileExpanded = value;
                   BlocProvider.of<VisitsCubit>(context)
                       .listTileArrowTapped(value, index);
                 },
                 title: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     // Text('UpComing Visit',style: TextStyle(fontSize: 24, color: Colors.black,fontWeight: FontWeight.bold)),
                     Padding(
                       padding: EdgeInsets.all(2.0),
                       child: Text(
-                        'Mon, Nov 25, 10:30 AM',
+                        visitingDate,
                         style: TextStyle(fontSize: 20),
                       ),
                     ),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.all(2.0),
                       child: Text(
                         'Established sick visit',
-                        style:
-                        TextStyle(fontSize: 18, color: Colors.grey),
+                        style: TextStyle(fontSize: 18, color: Colors.grey),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.all(2.0),
                       child: Text(
-                        'Elissa Thomas, MD',
-                        style:
-                        TextStyle(fontSize: 18, color: Colors.grey),
+                        docName,
+                        style: TextStyle(fontSize: 18, color: Colors.grey),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.all(2.0),
                       child: Text(
-                        'Main Street Pediatrics',
-                        style:
-                        TextStyle(fontSize: 18, color: Colors.grey),
+                        docAddress,
+                        style: TextStyle(fontSize: 18, color: Colors.grey),
                       ),
                     ),
                   ],
@@ -89,15 +100,15 @@ class VisitsListTile extends StatelessWidget {
                 ),
                 trailing: Padding(
                   padding: const EdgeInsets.only(top: 25.0),
-                  child: state is ListTileExpandedState && index == state.index
+                  child: cubit.isListTileExpanded
                       ? const Icon(
-                    Icons.keyboard_arrow_down,
-                    size: 24,
-                  )
+                          Icons.keyboard_arrow_down,
+                          size: 24,
+                        )
                       : const Icon(
-                    Icons.arrow_forward_ios_outlined,
-                    size: 24,
-                  ),
+                          Icons.arrow_forward_ios_outlined,
+                          size: 24,
+                        ),
                 ),
                 // controlAffinity: ListTileControlAffinity.values.first,
                 children: [
@@ -111,14 +122,13 @@ class VisitsListTile extends StatelessWidget {
                           height: 70,
                           color: Colors.green[100],
                           child: Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.train_outlined,
                                 size: 30,
                               ),
-                              Text(
+                              const Text(
                                 'Have you arrived?',
                                 style: TextStyle(fontSize: 16),
                               ),
@@ -128,14 +138,13 @@ class VisitsListTile extends StatelessWidget {
                                 child: DecoratedBox(
                                   decoration: BoxDecoration(
                                       color: Colors.green[900],
-                                      borderRadius: BorderRadius.all(
+                                      borderRadius: const BorderRadius.all(
                                           Radius.circular(20.0))),
-                                  child: Center(
+                                  child: const Center(
                                       child: Text(
-                                        "I'm here",
-                                        style:
-                                        TextStyle(color: Colors.white),
-                                      )),
+                                    "I'm here",
+                                    style: TextStyle(color: Colors.white),
+                                  )),
                                 ),
                               )
                             ],
@@ -145,14 +154,17 @@ class VisitsListTile extends StatelessWidget {
                     ],
                   ),
                   Visibility(
-                    visible: index != 0 ? false : true,
+                    visible: id == '10186161' ? true : false,
+                    //index != 0 ? false : true,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 84.0, top: 6.0),
                       child: CustomButton(
                           buttonColor: DefaultTheme.primaryColor,
                           buttonText: "Check IN",
                           buttonTextColor: DefaultTheme.backgroundColor,
-                          callBack: () {},
+                          callBack: () {
+                            callBack();
+                          },
                           height: 40,
                           width: double.infinity),
                     ),

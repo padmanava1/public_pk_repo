@@ -14,15 +14,11 @@ Future<void> backgroundHandler(RemoteMessage message) async {   //to start and h
 
 
 
-void main() async{
-  
+Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  
-  FirebaseMessaging.onBackgroundMessage(backgroundHandler);  //to start background services
+ // FirebaseMessaging.onBackgroundMessage(backgroundHandler);  //to start background services
   LocalNotificationService.initialize(); // to inititalize notification
-  
-  
   runApp(const MyApp());
 }
 
@@ -37,7 +33,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Notifications'),
+      home:  MyHomePage(title: 'Notifications'),
     );
   }
 }

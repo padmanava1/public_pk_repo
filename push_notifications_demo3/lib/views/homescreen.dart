@@ -18,11 +18,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
-    FcmMethodsClass fcmMethodsClass = FcmMethodsClass();
-
-    fcmMethodsClass.onTerminated;    // This method is called when app is in terminated state and you get a notification
-    fcmMethodsClass.onForeground;    //  his method only called when App in foreground
-    fcmMethodsClass.onBackground;      //  This method only call when App in background and not terminated
+    //  This method only call when App in background and not terminated
   }
 
 

@@ -1,35 +1,41 @@
+
 class VisitingModel {
   VisitingModel({
-      this.visitDateTime, 
-      this.patientname, 
+    this.id,
+      this.visitDateTime,
+      this.patientname,
       this.patientDOB, 
       this.doctorName, 
       this.doctorQualification, 
       this.doctorAddress,});
 
   VisitingModel.fromJson(dynamic json) {
-    visitDateTime = json['VisitDateTime'];
-    patientname = json['Patientname'];
-    patientDOB = json['PatientDOB'];
-    doctorName = json['DoctorName'];
-    doctorQualification = json['DoctorQualification'];
-    doctorAddress = json['DoctorAddress'];
+    id  = json['id'];
+    visitDateTime = json['visitDateTime'];
+    patientname = json['patientname'];
+    patientDOB = json['patientDOB'];
+    doctorName = json['doctorName'];
+    doctorQualification = json['doctorQualification'];
+    doctorAddress = json['doctorAddress'];
   }
-  String visitDateTime;
-  String patientname;
-  String patientDOB;
-  String doctorName;
-  String doctorQualification;
-  String doctorAddress;
+  String? id;
+  DateTime? visitDateTime;
+  String? patientname;
+  DateTime? patientDOB;
+  String? doctorName;
+  String? doctorQualification;
+  String? doctorAddress;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['VisitDateTime'] = visitDateTime;
-    map['Patientname'] = patientname;
-    map['PatientDOB'] = patientDOB;
-    map['DoctorName'] = doctorName;
-    map['DoctorQualification'] = doctorQualification;
-    map['DoctorAddress'] = doctorAddress;
+
+    map['id'] = id;
+    map['visitDateTime'] = visitDateTime;
+    map['patientname'] = patientname;
+    map['patientDOB'] = patientDOB;
+    map['doctorName'] = doctorName;
+    map['doctorQualification'] = doctorQualification;
+    map['doctorAddress'] = doctorAddress;
     return map;
   }
 

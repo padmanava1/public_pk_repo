@@ -37,6 +37,8 @@ dependencies:
   firebase_core: ^1.21.1
   firebase_messaging: ^13.0.0
   flutter_local_notifications: ^9.9.1
+  firebase_analytics: ^9.3.4
+  facebook_app_events: ^0.17.0
 
 dev_dependencies:
   flutter_test:

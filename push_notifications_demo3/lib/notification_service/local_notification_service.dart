@@ -10,13 +10,13 @@ class LocalNotificationService{
     const InitializationSettings initializationSettings =
     InitializationSettings(
       android: AndroidInitializationSettings("@mipmap/ic_launcher"),
-      iOS: IOSInitializationSettings(
+      iOS: IOSInitializationSettings(   //initializations for ios
         requestSoundPermission: false,
         requestBadgePermission: false,
         requestAlertPermission: false,
-        onDidReceiveLocalNotification: onDidReceiveLocalNotification,
       ),
     );
+
 
 
     _notificationsPlugin.initialize(
@@ -50,6 +50,11 @@ class LocalNotificationService{
           importance: Importance.max,
           priority: Priority.high,
         ),
+        iOS: IOSNotificationDetails(
+          threadIdentifier: 'thread_id',
+          presentBadge: true,
+          presentSound: true,
+        )
       );
 
       await _notificationsPlugin.show(
